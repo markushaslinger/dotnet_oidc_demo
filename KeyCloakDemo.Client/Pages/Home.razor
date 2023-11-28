@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@page "/"
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+<PageTitle>Home</PageTitle>
+
+<AuthorizeView>
+    Hello @context.User.Identity?.Name!
+</AuthorizeView>
+
+<button class="btn btn-primary" @onclick="GoToLogin">Login</button>
+
+
+@code {
+    private async Task GoToLogin()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("Login");
+    }
+}
